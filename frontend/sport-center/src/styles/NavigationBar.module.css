@@ -1,0 +1,51 @@
+.nav-container {
+  height: 100%;
+  width: 200px;
+  background-color: rgba(220, 68, 68, 0.7);
+  font-family: "Genos", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 45px;
+  padding-right: 25px;
+}
+
+.nav-list-item {
+  margin-bottom: 30px;
+  list-style: none;
+  color: white;
+}
+
+.nav-list-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-list-item a:hover {
+  color: rgb(254, 244, 132);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.btn {
+  background-color: rgba(220, 68, 68, 0.7);
+  background: transparent;
+  font-family: "Genos", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  font-style: italic;
+  color: white;
+  border: none;
+  padding: 0;
+}
+
+.btn:hover {
+  color: rgb(254, 244, 132);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
