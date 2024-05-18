@@ -1,9 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { AUTH_URL, LOGOUT_URL } from "../utils/urls";
 
 export const AuthContext = createContext({
   isAuthenticated: null,
-  username: '',
   login: () => { },
   logout: () => { }
 });
@@ -13,7 +12,12 @@ export const useAuth = () => useContext(AuthContext);
 export default function AuthContextProvider({ children }) {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken')) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const login = async (email, password, rememberMe) => {
     try {
@@ -34,8 +38,7 @@ export default function AuthContextProvider({ children }) {
         const resData = await response.json();
         const accessToken = resData.access_token;
         const refreshToken = resData.refresh_token;
-        const receivedUsername = resData.username;
-  
+
         if (rememberMe) {
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
@@ -44,13 +47,16 @@ export default function AuthContextProvider({ children }) {
           sessionStorage.setItem('refreshToken', refreshToken);
         }
         setIsAuthenticated(true);
-        setUsername(receivedUsername); 
+      } else if (response.status === 403) {
+        throw new Error('ForbiddenAccess');
+      } else {
+        throw new Error('UnexpectedError');
       }
-
     } catch (error) {
-      console.error(error);
+      throw new Error('LoginFailed');
     }
   }
+
 
   const logout = async () => {
     try {
@@ -82,7 +88,6 @@ export default function AuthContextProvider({ children }) {
 
   const authValues = {
     isAuthenticated: isAuthenticated,
-    username,
     login,
     logout
   }

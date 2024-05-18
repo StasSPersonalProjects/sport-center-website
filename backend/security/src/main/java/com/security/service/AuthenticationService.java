@@ -13,6 +13,8 @@ import com.security.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +32,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
+    private static final Logger LOG = LoggerFactory.getLogger(AuthenticationService.class);
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
@@ -88,6 +92,15 @@ public class AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    public boolean validateToken(String token) {
+        LOG.debug("Validating a token: {}", token.substring(7));
+        return tokenRepository.isTokenExistsAndValid(token.substring(7));
+    }
+
+    public Integer getUserIdByValidToken(String token) {
+        return tokenRepository.findUserIdByValidToken(token.substring(7));
     }
 
     private void revokeAllUserTokens(User user) {

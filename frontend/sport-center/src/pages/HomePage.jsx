@@ -1,15 +1,12 @@
 import { useAuth } from "../store/auth-context";
-import PageContent from "../components/PageContent";
 
 export default function HomePage() {
 
-  const { isAuthenticated, username } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
-    <PageContent>
-      <p>
-        {!isAuthenticated ? 'Home Page' : 'Hello ' + username + '!'}
-      </p>
-    </PageContent>
+    <p>
+      {!isAuthenticated ? 'Home Page' : 'Welcome Back!'}
+    </p>
   );
 }

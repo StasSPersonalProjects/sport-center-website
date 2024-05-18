@@ -9,24 +9,42 @@ export default function AuthForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
   const modal = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-   login(email, password, rememberMe);
-   navigate('/');
-  }
-
-  function handleOpenModal() {
-    modal.current.open();
+  
+    try {
+      await login(email, password, rememberMe);
+      navigate('/');
+    } catch (error) {
+      switch (error.message) {
+        case 'ForbiddenAccess':
+          setErrorMessage('Forbidden access: User does not have permission to access.');
+          modal.current.open();
+          break;
+        case 'UnexpectedError':
+          setErrorMessage('Unexpected error occurred during login.');
+          modal.current.open();
+          break;
+        case 'LoginFailed':
+          setErrorMessage('Login failed: Invalid email or password.');
+          modal.current.open();
+          break;
+        default:
+          setErrorMessage('Unknown error occurred:', error.message);
+          modal.current.open();
+          break;
+      }
+    }
   }
 
   return (
     <>
-      <ErrorModal ref={modal} message={'error occurred'}/>
-      <button onClick={handleOpenModal}>open modal</button>
+      <ErrorModal ref={modal} message={errorMessage} />
 
       <div className={styles.wrapper}>
 

@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
+import styles from '../styles/ErrorModal.module.css';
 
 const ErrorModal = forwardRef(function ErrorModal({ message }, ref) {
 
@@ -14,7 +15,7 @@ const ErrorModal = forwardRef(function ErrorModal({ message }, ref) {
   });
 
   return createPortal(
-    <dialog ref={dialog}>
+    <dialog ref={dialog} className={styles['dialog-popup']}>
       <p>{message}</p>
       <form method='dialog'>
         <button>Close</button>

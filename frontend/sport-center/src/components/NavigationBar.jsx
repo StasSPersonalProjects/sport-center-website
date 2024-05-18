@@ -1,4 +1,4 @@
-import { NavLink, Form } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from '../styles/NavigationBar.module.css';
 import { useAuth } from "../store/auth-context";
 
@@ -9,6 +9,12 @@ export default function NavigationBar() {
   return (
     <nav className={styles['nav-container']}>
       <ul className={styles['nav-list']}>
+      {isAuthenticated && <li className={styles['nav-list-item']}>
+          <NavLink
+            to='/personal'>
+            Personal Room
+          </NavLink>
+        </li>}
         <li className={styles['nav-list-item']}>
           <NavLink
             to='/' >
@@ -17,8 +23,14 @@ export default function NavigationBar() {
         </li>
         {!isAuthenticated && <li className={styles['nav-list-item']}>
           <NavLink
-            to='/auth' >
+            to='/auth'>
             Login
+          </NavLink>
+        </li>}
+        {isAuthenticated && <li className={styles['nav-list-item']}>
+          <NavLink
+            to='/offered-services'>
+            Our Services
           </NavLink>
         </li>}
         {isAuthenticated && <li className={styles['nav-list-item']}>
