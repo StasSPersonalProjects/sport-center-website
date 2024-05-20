@@ -1,3 +1,15 @@
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px rgb(254, 244, 132), 0 0 30px rgb(254, 244, 132), 0 0 40px rgb(254, 244, 132), 0 0 50px rgb(254, 244, 132), 0 0 60px rgb(254, 244, 132);
+  }
+  50% {
+    text-shadow: 0 0 10px #fff, 0 0 20px rgb(254, 244, 132), 0 0 30px rgb(254, 244, 132), 0 0 40px rgb(254, 244, 132), 0 0 50px rgb(254, 244, 132), 0 0 60px rgb(254, 244, 132), 0 0 70px rgb(254, 244, 132);
+  }
+  100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px rgb(254, 244, 132), 0 0 30px rgb(254, 244, 132), 0 0 40px rgb(254, 244, 132), 0 0 50px rgb(254, 244, 132), 0 0 60px rgb(254, 244, 132);
+  }
+}
+
 .nav-container {
   height: 100%;
   width: 200px;
@@ -20,6 +32,10 @@
   margin-bottom: 30px;
   list-style: none;
   color: white;
+}
+
+.glow {
+  animation: glow 2s infinite;
 }
 
 .nav-list-item a {

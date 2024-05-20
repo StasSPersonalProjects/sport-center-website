@@ -1,15 +1,17 @@
 import { NavLink } from "react-router-dom";
 import styles from '../styles/NavigationBar.module.css';
 import { useAuth } from "../store/auth-context";
+import { useCart } from "../store/cart-context";
 
 export default function NavigationBar() {
 
   const { isAuthenticated, logout } = useAuth();
+  const { items } = useCart();
 
   return (
     <nav className={styles['nav-container']}>
       <ul className={styles['nav-list']}>
-      {isAuthenticated && <li className={styles['nav-list-item']}>
+        {isAuthenticated && <li className={`${styles['nav-list-item']} ${items.length > 0 ? styles.glow : ''}`}>
           <NavLink
             to='/personal'>
             Personal Room

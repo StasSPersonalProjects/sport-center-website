@@ -50,6 +50,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .username(savedUser.getUsername())
                 .build();
     }
 

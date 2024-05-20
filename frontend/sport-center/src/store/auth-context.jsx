@@ -3,6 +3,7 @@ import { AUTH_URL, LOGOUT_URL } from "../utils/urls";
 
 export const AuthContext = createContext({
   isAuthenticated: null,
+  setIsAuthenticated: () => { },
   login: () => { },
   logout: () => { }
 });
@@ -88,6 +89,7 @@ export default function AuthContextProvider({ children }) {
 
   const authValues = {
     isAuthenticated: isAuthenticated,
+    setIsAuthenticated: setIsAuthenticated,
     login,
     logout
   }

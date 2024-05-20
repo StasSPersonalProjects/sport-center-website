@@ -11,7 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -24,7 +27,11 @@ public class AuthenticationController {
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticationController.class);
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            LOG.debug("Passwords doesn't match {} {}", request.getPassword(), request.getConfirmPassword());
+            return ResponseEntity.badRequest().body("Passwords doesn't match.");
+        }
         LOG.debug("Registering new user: {}", request.getFirstName());
         return ResponseEntity.ok(authenticationService.register(request));
     }

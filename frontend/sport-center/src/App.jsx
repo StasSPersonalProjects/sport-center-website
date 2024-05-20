@@ -4,17 +4,15 @@ import HomePage from './pages/HomePage';
 import PersonalRoomPage from './pages/PersonalRoomPage';
 import AuthenticationPage from './pages/AuthenticationPage';
 import RegistrationPage from './pages/RegistrationPage';
-import { action as registrationAction } from './pages/RegistrationPage';
-import AuthContextProvider from './store/auth-context';
-import { tokenLoader } from '../src/utils/auth';
 import OfferedServicesPage from './pages/OfferedServicesPage';
+import AuthContextProvider from './store/auth-context';
+import CartContextProvider from './store/cart-context';
 
 const router = createBrowserRouter([
   {
     path: '/',
     id: 'root',
     element: <RootLayout />,
-    loader: tokenLoader,
     children: [
       {
         index: true,
@@ -27,7 +25,6 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <RegistrationPage />,
-        action: registrationAction
       },
       {
         path: '/personal',
@@ -45,7 +42,9 @@ function App() {
 
   return (
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <CartContextProvider>
+        <RouterProvider router={router} />
+      </CartContextProvider>
     </AuthContextProvider>
   )
 }

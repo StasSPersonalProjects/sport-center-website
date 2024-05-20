@@ -5,7 +5,7 @@ import { useAuth } from '../store/auth-context';
 import ErrorModal from './ErrorModal';
 
 export default function AuthForm() {
-
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
