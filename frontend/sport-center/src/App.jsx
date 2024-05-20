@@ -7,6 +7,7 @@ import RegistrationPage from './pages/RegistrationPage';
 import OfferedServicesPage from './pages/OfferedServicesPage';
 import AuthContextProvider from './store/auth-context';
 import CartContextProvider from './store/cart-context';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -28,11 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/personal',
-        element: <PersonalRoomPage />
+        element: <ProtectedRoute component={<PersonalRoomPage />}/>
       },
       {
         path: '/offered-services',
-        element: <OfferedServicesPage />
+        element: <ProtectedRoute component={<OfferedServicesPage />}/>
       }
     ]
   }
