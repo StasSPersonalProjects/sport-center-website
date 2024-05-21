@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -31,7 +34,15 @@ public class CustomerDataController {
     private boolean validateToken(String token) {
         RestTemplate restTemplate = new RestTemplate();
         LOG.debug("Validating token: {}", token);
-        ResponseEntity<Boolean> response = restTemplate.postForEntity(tokenValidationUrl, token, Boolean.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token.substring(7));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<Boolean> response = restTemplate.exchange(
+                tokenValidationUrl,
+                HttpMethod.POST,
+                entity,
+                Boolean.class
+        );
         LOG.debug("Validated? {}", response.getBody());
         return response.getBody() != null && response.getBody();
     }
@@ -39,7 +50,15 @@ public class CustomerDataController {
     private Integer validateTokenAndGetCustomerId(String token) {
         RestTemplate restTemplate = new RestTemplate();
         LOG.debug("Sending a request to validate token and extract user ID.");
-        ResponseEntity<Integer> response = restTemplate.postForEntity(userIdExtractionAndTokenValidationUrl, token, Integer.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token.substring(7));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<Integer> response = restTemplate.exchange(
+                userIdExtractionAndTokenValidationUrl,
+                HttpMethod.POST,
+                entity,
+                Integer.class
+        );
         LOG.debug("Received response: {}", response.getBody());
         return response.hasBody() ? response.getBody() : null;
     }

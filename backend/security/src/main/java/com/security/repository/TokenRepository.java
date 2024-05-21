@@ -21,10 +21,10 @@ public interface TokenRepository extends JpaRepository<Token, Integer> {
 
     @Query(value = "SELECT COUNT(*) > 0 FROM token WHERE token = :token AND expired = false AND revoked = false",
             nativeQuery = true)
-    Long existsByTokenAndExpiredIsFalseAndRevokedIsFalse(@Param("token") String token);
+    Long isTokenExistsAndNotExpired(@Param("token") String token);
 
     default boolean isTokenExistsAndValid(String token) {
-        Long result = existsByTokenAndExpiredIsFalseAndRevokedIsFalse(token);
+        Long result = isTokenExistsAndNotExpired(token);
         return result > 0;
     }
 

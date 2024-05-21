@@ -96,8 +96,13 @@ public class AuthenticationService {
     }
 
     public boolean validateToken(String token) {
-        LOG.debug("Validating a token: {}", token.substring(7));
-        return tokenRepository.isTokenExistsAndValid(token.substring(7));
+        if (token.startsWith("Bearer ")) {
+            LOG.debug("Starts with Bearer, Validating a token: {}", token.substring(7));
+            return tokenRepository.isTokenExistsAndValid(token.substring(7));
+        } else {
+            LOG.debug("Validating a token: {}", token);
+            return tokenRepository.isTokenExistsAndValid(token);
+        }
     }
 
     public Integer getUserIdByValidToken(String token) {

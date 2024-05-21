@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AUTH_URL, LOGOUT_URL } from "../utils/urls";
+import { tokenLoader, validateToken } from "../utils/auth";
 
 export const AuthContext = createContext({
   isAuthenticated: null,
@@ -15,9 +16,32 @@ export default function AuthContextProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken')) {
-      setIsAuthenticated(true);
+    async function checkToken() {
+      const token = tokenLoader();
+      if (token) {
+        try {
+          const isTokenValid = await validateToken(token);
+          if (isTokenValid) {
+            setIsAuthenticated(true);
+          }
+        } catch (error) {
+          switch (error.message) {
+            case 'ForbiddenAccess':
+              console.error('Forbidden access');
+              break;
+            case 'UnexpectedError':
+              console.error('Unexpected error');
+              break;
+            default:
+              console.error('Unknown error occurred:', error.message);
+              break;
+          }
+        }
+      }
     }
+
+    checkToken();
+
   }, []);
 
   const login = async (email, password, rememberMe) => {
