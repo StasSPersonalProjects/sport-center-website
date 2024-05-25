@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import styles from '../styles/ErrorModal.module.css';
 
-const ErrorModal = forwardRef(function ErrorModal({ message }, ref) {
+const CustomModal = forwardRef(function CustomModal({ message }, ref) {
 
   const dialog = useRef();
 
@@ -25,4 +25,4 @@ const ErrorModal = forwardRef(function ErrorModal({ message }, ref) {
   )
 });
 
-export default ErrorModal;
+export default CustomModal;

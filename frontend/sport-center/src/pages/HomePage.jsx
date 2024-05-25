@@ -5,8 +5,8 @@ export default function HomePage() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <p>
+    <h1>
       {!isAuthenticated ? 'Home Page' : 'Welcome Back!'}
-    </p>
+    </h1>
   );
 }

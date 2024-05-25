@@ -1,6 +1,7 @@
 package com.customerdata.controller;
 
 import com.customerdata.dto.OfferedServiceDto;
+import com.customerdata.dto.PurchasedServiceDto;
 import com.customerdata.entities.OfferedService;
 import com.customerdata.service.CustomerDataService;
 import org.slf4j.Logger;
@@ -77,13 +78,13 @@ public class CustomerDataController {
     @PostMapping("/purchase")
     public ResponseEntity<String> purchaseOfferedService(
             @RequestHeader("Authorization") String token,
-            @RequestParam String purchase) {
-        LOG.debug("Received request for purchasing offered service: {}.", purchase);
+            @RequestBody List<PurchasedServiceDto> purchasedServiceDto) {
+        LOG.debug("Received request for purchasing offered services: {}.", purchasedServiceDto.toString());
         Integer customerId = validateTokenAndGetCustomerId(token);
         LOG.debug("Found user ID: {}", customerId);
         try {
-            customerDataService.purchaseOfferedServiceByCustomer(customerId, purchase);
-            return ResponseEntity.ok("Service purchased successfully.");
+            double totalPrice = customerDataService.purchaseOfferedServiceByCustomer(customerId, purchasedServiceDto);
+            return ResponseEntity.ok("You were charged for total purchase price: " + totalPrice + " ILS");
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }

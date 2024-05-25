@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "relations_customers_to_service")
 @Data
@@ -22,4 +24,7 @@ public class RelationsCustomersToService {
     @ManyToOne
     @JoinColumn(name = "offered_services_id", nullable = false)
     private OfferedService offeredService;
+    private Integer quantity;
+    private Double price;
+    private LocalDateTime date;
 }

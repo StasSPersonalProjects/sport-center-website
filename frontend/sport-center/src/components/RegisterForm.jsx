@@ -3,7 +3,7 @@ import styles from '../styles/RegisterForm.module.css';
 import { REGISTER_URL } from '../utils/urls';
 import { useAuth } from '../store/auth-context';
 import { useNavigate } from 'react-router-dom';
-import ErrorModal from './ErrorModal';
+import CustomModal from './CustomModal';
 
 export default function RegisterForm() {
 
@@ -64,7 +64,7 @@ export default function RegisterForm() {
 
   return (
     <>
-      <ErrorModal ref={modal} message={errorMessage} />
+      <CustomModal ref={modal} message={errorMessage} />
 
       <div className={styles.wrapper}>
         <form onSubmit={handleSubmit}>

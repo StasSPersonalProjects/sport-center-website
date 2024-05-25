@@ -1,0 +1,13 @@
+.accordion {
+  font-family: "Poppins", sans-serif;
+  border: none;
+  border-radius: 10px;
+  background: rgba(155, 55, 55, 0.9);
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.accordion h2 {
+  padding: 20px;
+}

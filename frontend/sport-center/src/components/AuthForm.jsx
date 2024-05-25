@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useRef } from 'react';
 import styles from '../styles/AuthForm.module.css';
 import { useAuth } from '../store/auth-context';
-import ErrorModal from './ErrorModal';
+import CustomModal from './CustomModal';
 
 export default function AuthForm() {
   
@@ -44,7 +44,7 @@ export default function AuthForm() {
 
   return (
     <>
-      <ErrorModal ref={modal} message={errorMessage} />
+      <CustomModal ref={modal} message={errorMessage} />
 
       <div className={styles.wrapper}>
 
